@@ -23,13 +23,29 @@ public class ArrayHeap extends ArrayBinaryTree implements Heap {
     }
 
 
+    Algorithm BubbleUp (Position pos) {
+        while (pos != root && pos.element < pos.parent.element)
+        swapElements (pos, pos.parent)
+        pos = pos.parent
+    }
+
+
+
+
   public void add(Object newKey, Object newElement) throws InvalidObjectException {
       // TODO: add code here
-      return null;
+      btArray[size] =
+      BubbleUp (insertPos);
+
+      // increase size
+      ++size;
+      
+      // expanding code
   }
 
   public Object removeRoot() throws EmptyHeapException {
       // TODO: add code here
+
       return null;
   }
 
