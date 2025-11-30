@@ -38,4 +38,8 @@ public class ArrayPosition implements Position {
     public void setIndex (int newIndex) {
         index = newIndex;
     }
+
+    public String toString(){
+        return index + ", " + element.toString();
+    }
 }

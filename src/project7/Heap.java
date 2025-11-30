@@ -14,4 +14,6 @@ public interface Heap extends BinaryTree {
   public void add(Object newKey, Object newElement) throws InvalidObjectException;
 
   public Object removeRoot() throws EmptyHeapException;
+
+  public void printHeap();
 }

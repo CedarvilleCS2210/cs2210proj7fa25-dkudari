@@ -117,6 +117,8 @@ public class ArrayBinaryTree implements BinaryTree {
             return null;
 		}
         else {
+            
+            //System.out.println("parent " + ", " + ((myIndex-1) >> 1) + ", " + btArray[ (myIndex-1) >> 1]);
             return (Position) btArray[ (myIndex-1) >> 1];
 		}
 
@@ -155,6 +157,7 @@ public class ArrayBinaryTree implements BinaryTree {
     public boolean isRoot (Position pos) throws InvalidPositionException {
         checkPosition(pos);
         int myIndex = ((ArrayPosition) pos).getIndex();
+        //System.out.println("isRoot : " + myIndex + "," + ROOT);
         return (myIndex == ROOT);
     }
 
@@ -173,6 +176,7 @@ public class ArrayBinaryTree implements BinaryTree {
         }
 		// DMG - 12/8/08- added check of size
         int index = ((ArrayPosition) pos).getIndex();
+        //System.out.println("checkPosition: " + index + "," + size);
         if (index >= size) {
             throw new InvalidPositionException();
         }
