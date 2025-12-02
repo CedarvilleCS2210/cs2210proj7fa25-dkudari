@@ -15,5 +15,5 @@ public interface Heap extends BinaryTree {
 
   public Object removeRoot() throws EmptyHeapException;
 
-  public void printHeap();
+  //public void printHeap();
 }

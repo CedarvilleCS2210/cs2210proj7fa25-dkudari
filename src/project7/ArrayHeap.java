@@ -24,6 +24,10 @@ public class ArrayHeap extends ArrayBinaryTree implements Heap {
         heapComp = newComp;
     }
 
+    /*
+    * This function swaps two elements to maintain the heap ordering property
+    * param: the two ArrayPosition to swap
+     */
     private void swapElements (ArrayPosition pos1, ArrayPosition pos2){
         int temp = pos1.getIndex();
         int temp2 = pos2.getIndex();
@@ -33,6 +37,11 @@ public class ArrayHeap extends ArrayBinaryTree implements Heap {
         btArray[temp] = pos2;
     }
 
+    /*
+    * A helper function to acess the element part of an item
+    * param: the element of the btarray
+    * returns: the element part of an item 
+     */
     private Object getItemValue (Object element) {
         if (element instanceof ArrayPosition pos) {
             Item item = (Item)pos.element();
@@ -41,6 +50,10 @@ public class ArrayHeap extends ArrayBinaryTree implements Heap {
         return null;
     }
 
+    /*
+    * A helper function that checks if the position is lesser than its parent and then calls the swap method to fix the ordering
+    * param: the element of the btarray that needs to be bubbled up
+     */
     private void bubbleUp (ArrayPosition pos) {
         while (!isRoot(pos)) {
             ArrayPosition parent = (ArrayPosition)parent(pos);
@@ -52,7 +65,16 @@ public class ArrayHeap extends ArrayBinaryTree implements Heap {
         }
     }
 
+    /*
+    * This method adds a new element into the array and calls bubble up to make sure that the heap ordering property is followed.
+    * The array also resizes itself when it reaches capacity.
+    * param: the key and the element of the new ArrayPosition to add into the array
+    * throws: InvalidObjectException if objects are not comparable
+     */
     public void add(Object newKey, Object newElement) throws InvalidObjectException {
+        if (!this.heapComp.isComparable(newKey) || !this.heapComp.isComparable(newElement)) {
+            throw new InvalidObjectException("Elements cannot be compared. Please enter a valid element");
+        }
         if (size + 1 > btArray.length) {
             ArrayPosition[] newArray = new ArrayPosition[size * 2];
             System.arraycopy(btArray, 0, newArray, 0, size);
@@ -64,12 +86,17 @@ public class ArrayHeap extends ArrayBinaryTree implements Heap {
         bubbleUp (pos);
     }
 
+    /* Method for testing
     public void printHeap() {
         for (int i = 0, j = size; i < j; i++) {
             System.out.println(btArray[i]);
         }
-    }
-    
+    }*/
+     
+    /*
+    * A helper function that checks if the position is greater than its parent and then calls the swap method to fix the ordering
+    * param: the element of the btarray that needs to be bubbled down
+     */
     private void bubbleDown (ArrayPosition pos) {
         while (pos != null) {
             ArrayPosition lchild = (ArrayPosition)leftChild(pos);
@@ -90,7 +117,14 @@ public class ArrayHeap extends ArrayBinaryTree implements Heap {
         }
     }
 
+    /*
+    * This function removes the root of the tree and returns that element. It also calles bubble up to repair the heap ordering property.
+    * returns: the object that was removed
+     */
     public Object removeRoot() throws EmptyHeapException {
+        if (size() == 0) {
+            throw new EmptyHeapException("Cannot remove from an empty array");
+        }
         ArrayPosition root = btArray[ROOT];
         swapElements(root, btArray[size-1]);
         btArray[size-1] = null;
@@ -101,7 +135,9 @@ public class ArrayHeap extends ArrayBinaryTree implements Heap {
 
     }
 
-    // you may want to expand main; it is just provided as a sample
+    /*
+    * The main method of the class. Runs tests to make sure the heap is working property.
+     */
     public static void main (String[] args) {
 	    Comparator myComp = new IntegerComparator();
         Heap myHeap = new ArrayHeap (myComp, 8);
@@ -120,15 +156,16 @@ public class ArrayHeap extends ArrayBinaryTree implements Heap {
         
         while (!myHeap.isEmpty()) {
             Item removedItem = (Item) myHeap.removeRoot();
-            //myHeap.printHeap();
             System.out.print("Key:   " + removedItem.key() + "     ");
             System.out.println("Removed " + removedItem.element());
         }
         System.out.println("All nodes removed");
 
+
+       // This code adds 10000 elements into the heap and them removes them
        Random ran = new Random(100);
         for (int i = 0; i < 10000; i++) {
-            myHeap.add(i,ran.nextInt(10000));
+            myHeap.add(ran.nextInt(100000),ran.nextInt(10000));
         }
 
         while (!myHeap.isEmpty()) {
